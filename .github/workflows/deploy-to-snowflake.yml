@@ -10,6 +10,7 @@ on:
       - 'environment.yml'
       - 'notebooks/ML_WEEKLY_PREDICTION.ipynb'
       - 'snowflake.yml'
+      - '.github/workflows/deploy-to-snowflake.yml'
 
 jobs:
   deploy:
@@ -37,11 +38,11 @@ jobs:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-        run: snow streamlit deploy crime_dashboard --replace -x
+        run: snow streamlit deploy crime_dashboard --replace -x --database SNOWFLAKE_LEARNING_DB --schema PUBLIC
 
       - name: Deploy ML notebook
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-        run: snow notebook deploy ml_weekly_prediction --replace -x
+        run: snow notebook deploy ml_weekly_prediction --replace -x --database SNOWFLAKE_LEARNING_DB --schema PUBLIC
