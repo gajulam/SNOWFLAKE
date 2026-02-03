@@ -1,0 +1,15 @@
+external_id:
+
+snowflake-mahi-2024-7f3a9b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+
+username
+
+gajula
+
+password
+
+Helloashisaneesh1@
+
+bucket_bronze data incoming path:
+
+snowflake-bronze-delta-mahi/bronze/incoming/

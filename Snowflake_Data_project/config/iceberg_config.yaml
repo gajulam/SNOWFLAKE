@@ -1,0 +1,89 @@
+# Apache Iceberg Configuration for Snowflake Zero-Copy Setup
+
+# S3 Configuration
+s3:
+  bucket: snowflake-bronze-delta-mahi
+  iceberg_path: root/crime_iceberg/
+  full_path: s3://snowflake-bronze-delta-mahi/root/crime_iceberg/
+  
+# AWS Configuration
+aws:
+  account_id: "211125758501"
+  region: us-east-2
+  iam_role: SnowflakeS3AccessRole
+  iam_role_arn: arn:aws:iam::211125758501:role/SnowflakeS3AccessRole
+  external_id: snowflake-mahi-2024-7f3a9b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c
+
+# Snowflake Configuration
+snowflake:
+  database: SNOWFLAKE_LEARNING_DB
+  schema: PUBLIC
+  external_table_name: BRONZE_CRIMES_ICEBERG
+  storage_integration: s3_iceberg_integration
+
+# Iceberg Catalog Configuration
+catalog:
+  # Option 1: AWS Glue Catalog
+  type: glue  # or 's3' for S3-based catalog
+  glue_database: crime_data_db
+  glue_table: crime_iceberg
+  catalog_name: AwsDataCatalog
+  
+  # Option 2: S3-based Catalog (if not using Glue)
+  # type: s3
+  # metadata_location: s3://snowflake-bronze-delta-mahi/root/crime_iceberg/metadata/
+
+# Data Format
+data_format:
+  file_type: parquet  # Iceberg requires Parquet format
+  compression: snappy
+  partition_columns: []  # Add partition columns if needed, e.g., ['year', 'month']
+
+# Table Schema (matching BRONZE_CRIMES_2 structure)
+schema:
+  columns:
+    - name: ID
+      type: NUMBER(38,0)
+    - name: CASE_NUMBER
+      type: VARCHAR(16777216)
+    - name: DATE
+      type: VARCHAR(16777216)
+    - name: BLOCK
+      type: VARCHAR(16777216)
+    - name: IUCR
+      type: VARCHAR(16777216)
+    - name: PRIMARY_TYPE
+      type: VARCHAR(16777216)
+    - name: DESCRIPTION
+      type: VARCHAR(16777216)
+    - name: LOCATION_DESCRIPTION
+      type: VARCHAR(16777216)
+    - name: ARREST
+      type: BOOLEAN
+    - name: DOMESTIC
+      type: BOOLEAN
+    - name: BEAT
+      type: NUMBER(38,0)
+    - name: DISTRICT
+      type: NUMBER(38,0)
+    - name: WARD
+      type: NUMBER(38,0)
+    - name: COMMUNITY_AREA
+      type: NUMBER(38,0)
+    - name: FBI_CODE
+      type: VARCHAR(16777216)
+    - name: X_COORDINATE
+      type: NUMBER(38,0)
+    - name: Y_COORDINATE
+      type: NUMBER(38,0)
+    - name: YEAR
+      type: NUMBER(38,0)
+    - name: UPDATED_ON
+      type: VARCHAR(16777216)
+    - name: LATITUDE
+      type: NUMBER(38,9)
+    - name: LONGITUDE
+      type: NUMBER(38,9)
+    - name: LOCATION
+      type: VARCHAR(16777216)
+
