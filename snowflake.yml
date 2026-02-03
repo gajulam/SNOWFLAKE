@@ -9,7 +9,7 @@ entities:
       name: CRIME_DASHBOARD
       database: SNOWFLAKE_LEARNING_DB
       schema: PUBLIC
-    query_warehouse: COMPUTE_WH
+    query_warehouse: SNOWFLAKE_LEARNING_WH
     main_file: streamlit_app.py
     artifacts:
       - streamlit_app.py
@@ -21,7 +21,7 @@ entities:
       name: ML_WEEKLY_PREDICTION
       database: SNOWFLAKE_LEARNING_DB
       schema: PUBLIC
-    query_warehouse: COMPUTE_WH
+    query_warehouse: SNOWFLAKE_LEARNING_WH
     notebook_file: notebooks/ML_WEEKLY_PREDICTION.ipynb
     artifacts:
       - notebooks/ML_WEEKLY_PREDICTION.ipynb
