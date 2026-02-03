@@ -1,0 +1,10 @@
+# Snowflake CLI connection template (no credentials)
+# Credentials are injected via GitHub Secrets → SNOWFLAKE_* env vars
+# See docs/CICD_SETUP.md for setup instructions
+
+[connections.default]
+# Values are overridden by environment variables in CI/CD:
+# SNOWFLAKE_CONNECTIONS_DEFAULT_ACCOUNT
+# SNOWFLAKE_CONNECTIONS_DEFAULT_USER
+# SNOWFLAKE_CONNECTIONS_DEFAULT_PASSWORD
+# (or SNOWFLAKE_CONNECTIONS_DEFAULT_PRIVATE_KEY_RAW for key auth)

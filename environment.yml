@@ -1,0 +1,10 @@
+# Snowflake Streamlit dependencies (Snowflake Anaconda Channel)
+name: crime_dashboard
+channels:
+  - snowflake
+dependencies:
+  - python=3.10.*
+  - snowflake-snowpark-python
+  - streamlit
+  - pandas
+  - plotly

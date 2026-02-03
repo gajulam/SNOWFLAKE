@@ -1,0 +1,27 @@
+# Snowflake project definition for CI/CD deployment
+# Deploys: streamlit_app.py, notebooks/ML_WEEKLY_PREDICTION.ipynb
+definition_version: 2
+
+entities:
+  crime_dashboard:
+    type: streamlit
+    identifier:
+      name: CRIME_DASHBOARD
+      database: SNOWFLAKE_LEARNING_DB
+      schema: PUBLIC
+    query_warehouse: COMPUTE_WH
+    main_file: streamlit_app.py
+    artifacts:
+      - streamlit_app.py
+      - environment.yml
+
+  ml_weekly_prediction:
+    type: notebook
+    identifier:
+      name: ML_WEEKLY_PREDICTION
+      database: SNOWFLAKE_LEARNING_DB
+      schema: PUBLIC
+    query_warehouse: COMPUTE_WH
+    notebook_file: notebooks/ML_WEEKLY_PREDICTION.ipynb
+    artifacts:
+      - notebooks/ML_WEEKLY_PREDICTION.ipynb

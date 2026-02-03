@@ -1,0 +1,47 @@
+# Deploy Streamlit app and ML notebook to Snowflake on push
+# Triggered when: streamlit_app.py, notebooks/ML_WEEKLY_PREDICTION.ipynb change
+name: Deploy to Snowflake
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'streamlit_app.py'
+      - 'environment.yml'
+      - 'notebooks/ML_WEEKLY_PREDICTION.ipynb'
+      - 'snowflake.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Snowflake CLI
+        uses: snowflakedb/snowflake-cli-action@v2.0
+        with:
+          cli-version: "3.14"
+
+      - name: Verify connection
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: snow connection test -x
+
+      - name: Deploy Streamlit app
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: snow streamlit deploy crime_dashboard --replace -x
+
+      - name: Deploy ML notebook
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        run: snow notebook deploy ml_weekly_prediction --replace -x
