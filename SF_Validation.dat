@@ -1,0 +1,35 @@
+select 'bronze', count(*) from SNOWFLAKE_LEARNING_DB.PUBLIC.bronze_crimes
+union
+select 'silver_curated', count(*) from SNOWFLAKE_LEARNING_DB.PUBLIC.silver_crimes_curated
+union
+select 'silver_cdc', count(*) from SNOWFLAKE_LEARNING_DB.PUBLIC.silver_crimes_cdc
+union
+select 'silver_dynm', count(*) from SNOWFLAKE_LEARNING_DB.PUBLIC.silver_crimes_dynm
+
+
+select * from SNOWFLAKE_LEARNING_DB.PUBLIC.bronze_crimes where case_number like 'TEST%'
+delete from  SNOWFLAKE_LEARNING_DB.PUBLIC.bronze_crimes where case_number like 'TEST%'
+
+select * from SNOWFLAKE_LEARNING_DB.PUBLIC.silver_crimes_cdc where  case_number like 'TEST%'
+delete from SNOWFLAKE_LEARNING_DB.PUBLIC.silver_crimes_cdc where  case_number like 'TEST%'
+delete FROM SNOWFLAKE_LEARNING_DB.PUBLIC.stream_bronze_crimes;
+
+
+show integrations;
+describe integration GITHUB_REPO_INTEGRATION
+describe git repository;
+
+GIT Integration Steps:
+
+CREATE OR REPLACE SECRET SNOWFLAKE_LEARNING_DB.PUBLIC.GIT_GITHUB_TOKEN
+  TYPE = GENERIC_STRING
+  SECRET_STRING = '☺☺☺☺âE OR REPLACE API INTEGRATION GITHUB_REPO_INTEGRATION
+API_PROVIDER = git_https_api
+API_ALLOWED_PREFIXES = ('https://github.com')
+ENABLED = TRUE
+  --ALLOWED_AUTHENTICATION_SECRETS = ('ALL');
+
+  
+CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE
+ORIGIN = 'https://github.com/gajulam/SNOWFLAKE.git'
+ API_INTEGRATION = GITHUB_REPO_INTEGRATION;
